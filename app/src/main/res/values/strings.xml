@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SavedState-Playground</string>
+    <string name="main_save_regular_text">Save regular text</string>
+    <string name="main_save_live_data_text">Save LiveData text</string>
+    <string name="main_saved_regular_text">Saved regular text:</string>
+    <string name="main_saved_live_data_text">Saved LiveData text</string>
+</resources>
