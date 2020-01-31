@@ -9,9 +9,10 @@ import com.husaynhakeem.savedstateplayground.BaseViewModel.Companion.LIVE_DATE_K
 import com.husaynhakeem.savedstateplayground.BaseViewModel.Companion.REGULAR_KEY
 
 
-class AndroidViewModelWithSavedState(application: Application, private val savedStateHandle: SavedStateHandle) :
-    AndroidViewModel(application),
-    BaseViewModel {
+class AndroidViewModelWithSavedState(
+    application: Application,
+    private val savedStateHandle: SavedStateHandle
+) : AndroidViewModel(application), BaseViewModel {
 
     override val regularText: String
         get() = savedStateHandle.get<String>(REGULAR_KEY).orEmpty()
@@ -24,6 +25,5 @@ class AndroidViewModelWithSavedState(application: Application, private val saved
 
     override fun saveLiveDataText(text: String) {
         savedStateHandle.set(LIVE_DATE_KEY, text)
-        Log.d("Log", "AndroidViewModelWithSavedState application: ${getApplication<Application>()}")
     }
 }

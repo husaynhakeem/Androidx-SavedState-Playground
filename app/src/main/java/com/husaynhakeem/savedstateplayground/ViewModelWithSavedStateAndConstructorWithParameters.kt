@@ -1,7 +1,7 @@
 package com.husaynhakeem.savedstateplayground
 
 import android.os.Bundle
-import androidx.lifecycle.AbstractSavedStateVMFactory
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -39,10 +39,18 @@ class ViewModelWithSavedStateAndConstructorWithParametersFactory(
     defaultState: Bundle?,
     private val classAInstance: ClassA,
     private val classBInstance: ClassB
-) : AbstractSavedStateVMFactory(owner, defaultState) {
+) : AbstractSavedStateViewModelFactory(owner, defaultState) {
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(key: String, modelClass: Class<T>, handle: SavedStateHandle): T {
-        return ViewModelWithSavedStateAndConstructorWithParameters(handle, classAInstance, classBInstance) as T
+    override fun <T : ViewModel?> create(
+        key: String,
+        modelClass: Class<T>,
+        handle: SavedStateHandle
+    ): T {
+        return ViewModelWithSavedStateAndConstructorWithParameters(
+            handle,
+            classAInstance,
+            classBInstance
+        ) as T
     }
 }

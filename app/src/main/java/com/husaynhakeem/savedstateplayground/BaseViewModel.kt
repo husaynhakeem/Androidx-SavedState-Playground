@@ -6,13 +6,13 @@ import androidx.lifecycle.LiveData
 interface BaseViewModel {
 
 
-    open val regularText: String
+    val regularText: String
 
-    open val liveDataText: LiveData<String>
+    val liveDataText: LiveData<String>
 
-    open fun saveRegularText(text: String)
+    fun saveRegularText(text: String)
 
-    open fun saveLiveDataText(text: String)
+    fun saveLiveDataText(text: String)
 
     companion object {
         val REGULAR_KEY = "regular_key"

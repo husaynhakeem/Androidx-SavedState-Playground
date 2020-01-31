@@ -3,7 +3,8 @@ package com.husaynhakeem.savedstateplayground
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.SavedStateVMFactory
+import androidx.lifecycle.SavedStateViewModelFactory
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -29,14 +30,13 @@ class MainActivity : AppCompatActivity() {
             mainSavedRegularTextTextView.text = viewModel.regularText
         }
         mainLiveDataTextButton.setOnClickListener {
-            val input = mainEditText.text.toString()
-            viewModel.saveLiveDataText(input)
+            viewModel.saveLiveDataText(mainEditText.text.toString())
             mainEditText.text = null
         }
     }
 
     private fun setupViewModelWithSavedState() {
-        val factory = SavedStateVMFactory(this)
+        val factory = SavedStateViewModelFactory(application, this)
         viewModel = ViewModelProviders.of(this, factory).get(ViewModelWithSavedState::class.java)
     }
 
@@ -45,22 +45,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupAndroidViewModelWithSavedState() {
-        val factory = SavedStateVMFactory(application, this, null)
-        viewModel = ViewModelProviders.of(this, factory).get(AndroidViewModelWithSavedState::class.java)
+        val factory = SavedStateViewModelFactory(application, this, null)
+        viewModel = ViewModelProvider(this, factory).get(AndroidViewModelWithSavedState::class.java)
     }
 
     private fun setupViewModelWithSavedStateAndDefaultState() {
         val defaultState = ViewModelWithSavedStateAndDefaultState.getDefaultState()
-        val factory = SavedStateVMFactory(this, defaultState)
-        viewModel = ViewModelProviders.of(this, factory).get(ViewModelWithSavedStateAndDefaultState::class.java)
+        val factory = SavedStateViewModelFactory(application, this, defaultState)
+        viewModel =
+            ViewModelProvider(this, factory).get(ViewModelWithSavedStateAndDefaultState::class.java)
     }
 
     private fun setupViewModelWithSavedStateAndConstructorWithParameters() {
         val classAInstance = ClassA()
         val classBInstance = ClassB()
         val factory =
-            ViewModelWithSavedStateAndConstructorWithParametersFactory(this, null, classAInstance, classBInstance)
+            ViewModelWithSavedStateAndConstructorWithParametersFactory(
+                this,
+                null,
+                classAInstance,
+                classBInstance
+            )
         viewModel =
-            ViewModelProviders.of(this, factory).get(ViewModelWithSavedStateAndConstructorWithParameters::class.java)
+            ViewModelProviders.of(this, factory)
+                .get(ViewModelWithSavedStateAndConstructorWithParameters::class.java)
     }
 }
